@@ -74,7 +74,7 @@ def get_maps():
 
     return provincias
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False,ttl=3600)
 def process_name(name, d):
     if name == '':
         st.info('''

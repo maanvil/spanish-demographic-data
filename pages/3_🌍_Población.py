@@ -25,7 +25,7 @@ def get_data_poblacion_tipo(min_year, max_year):
     df2 = df2[df2.Periodo<=max_year]
     return df1, df2
                      
-@st.cache_data
+@st.cache_data(ttl=3600)
 def donut(df, top, year):
     df = df[df.Periodo==year]
     df.drop(['Periodo'], axis=1, inplace=True)
@@ -55,7 +55,7 @@ def donut(df, top, year):
         for i in range(r):
             cols[i].metric(df.at[3*c+i,'Provincias'], f'{round(df.at[3*c+i,"Total"]):,}')
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def piramide(df, year):
     dfh = df[(df.Sexo=='Hombres') & (df.Edad!='Todas') & (df.Periodo==year)]
     dfm = df[(df.Sexo=='Mujeres') & (df.Edad!='Todas') & (df.Periodo==year)]
@@ -89,7 +89,7 @@ def piramide(df, year):
 
     st.plotly_chart(fig, use_container_width=True)
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def barras_genero(df, year):
     df = df[(df.Edad=='Todas') & (df.Sexo!='Total')]
     fig = px.bar(df, x='Periodo', y='Total', color='Sexo')
@@ -110,7 +110,7 @@ def barras_genero(df, year):
 
     st.plotly_chart(fig, use_container_width=True)
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def basic_metrics(df, year):
     df = df[(df.Edad=='Todas') & (df.Periodo==year)]
     p, h, m = df.Total.values

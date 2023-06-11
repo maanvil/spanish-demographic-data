@@ -47,7 +47,7 @@ def get_data(): # Solo tenemos datos de todo en el rango [1975, 2021]
 
     return df, sinTotal, int(min(years)), int(max(years)), df.Provincias.unique(), prov_dict, rev_prov_dict, prov_geo_point_2d
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def get_diff(year1, year2, df):
     if year1 != year2:
         df = df[(df['Periodo'] == year1) | (df['Periodo'] == year2)]
@@ -65,16 +65,16 @@ def get_diff(year1, year2, df):
     
     return df
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def get_data_prov(prov, df):
     return df[df.Provincias==prov]
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def get_data_years(year1, year2, df, perMil):
     df = df[(df['Periodo'] == year1) | (df['Periodo'] == year2)]['MatrimoniosperMil' if perMil else 'Matrimonios']
     return df.values
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def generate_metrics(year1, year2, df, perMil, sameYear=False):
     if sameYear:
         data = get_data_years(year1, year2, df, perMil)

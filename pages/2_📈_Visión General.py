@@ -13,7 +13,7 @@ def get_data_evolucion():
     min_year, max_year = min(df.Periodo), max(df.Periodo)
     return df, min_year, max_year
 
-@st.cache_data
+@st.cache_data(ttl=3600)
 def metricas(year, df):
     df = df.set_index('Periodo')
 
